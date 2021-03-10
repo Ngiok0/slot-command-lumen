@@ -14,13 +14,13 @@ class SlotCommand extends \Illuminate\Console\Command
     public const COLUMNS = 5;
 
     // Amount of bet in cents (1 eur = 100 cents)
-    public int $bet = 100;
+    public $bet = 100;
 
     // Available symbols to display in board
-    public array $symbols = ['9', '10', 'J', 'Q', 'K', 'A', 'cat', 'dog', 'monkey', 'bird'];
+    public $symbols = ['9', '10', 'J', 'Q', 'K', 'A', 'cat', 'dog', 'monkey', 'bird'];
 
     // Positions of array of winner pay lines
-    public array $payLines = [
+    public $payLines = [
         [0, 3, 6, 9, 12],
         [1, 4, 7, 10, 13],
         [2, 5, 8, 11, 14],
@@ -29,7 +29,7 @@ class SlotCommand extends \Illuminate\Console\Command
     ];
 
     // Amount of returned bet depending on matching symbols
-    public array $payOut = [
+    public $payOut = [
         3 => 0.2,
         4 => 2,
         5 => 10

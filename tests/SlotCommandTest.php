@@ -1,18 +1,21 @@
 <?php
 
 use App\Console\Commands\SlotCommand;
+use App\Http\Controllers\SlotController;
 
 class SlotCommandTest extends TestCase
 {
+    public const TEST_CLASS = SlotController::class;
+
     public function test_command_exists()
     {
-        $this->assertTrue(class_exists(SlotCommand::class));
+        $this->assertTrue(class_exists(self::TEST_CLASS));
     }
 
     /** @test */
     public function test_slot_with_not_matched_paylines()
     {
-        $payLines = $this->invokeMethod(SlotCommand::class, 'getMatchedPayLines', [
+        $payLines = $this->invokeMethod(self::TEST_CLASS, 'getMatchedPayLines', [
             'board' => [
                 0 => "J", 3 => "K", 6 => "Q", 9 => "9", 12 => "cat",
                 1 => "Q", 4 => "9", 7 => "K", 10 => "Q", 13 => "cat",
@@ -20,7 +23,7 @@ class SlotCommandTest extends TestCase
             ]
         ]);
 
-        $totalWin = $this->invokeMethod(SlotCommand::class, 'getTotalWinAmount', [
+        $totalWin = $this->invokeMethod(self::TEST_CLASS, 'getTotalWinAmount', [
             'payLines' => $payLines
         ]);
 
@@ -31,7 +34,7 @@ class SlotCommandTest extends TestCase
     /** @test */
     public function test_slot_with_three_matches_on_one_payline()
     {
-        $payLines = $this->invokeMethod(SlotCommand::class, 'getMatchedPayLines', [
+        $payLines = $this->invokeMethod(self::TEST_CLASS, 'getMatchedPayLines', [
             'board' => [
                 0 => "J", 3 => "J", 6 => "J", 9 => "9", 12 => "cat",
                 1 => "Q", 4 => "9", 7 => "K", 10 => "Q", 13 => "cat",
@@ -39,7 +42,7 @@ class SlotCommandTest extends TestCase
             ]
         ]);
 
-        $totalWin = $this->invokeMethod(SlotCommand::class, 'getTotalWinAmount', [
+        $totalWin = $this->invokeMethod(self::TEST_CLASS, 'getTotalWinAmount', [
             'payLines' => $payLines
         ]);
 
@@ -50,7 +53,7 @@ class SlotCommandTest extends TestCase
     /** @test */
     public function test_slot_with_four_matches_on_one_payline()
     {
-        $payLines = $this->invokeMethod(SlotCommand::class, 'getMatchedPayLines', [
+        $payLines = $this->invokeMethod(self::TEST_CLASS, 'getMatchedPayLines', [
             'board' => [
                 0 => "J", 3 => "J", 6 => "J", 9 => "J", 12 => "cat",
                 1 => "Q", 4 => "9", 7 => "K", 10 => "Q", 13 => "cat",
@@ -58,7 +61,7 @@ class SlotCommandTest extends TestCase
             ]
         ]);
 
-        $totalWin = $this->invokeMethod(SlotCommand::class, 'getTotalWinAmount', [
+        $totalWin = $this->invokeMethod(self::TEST_CLASS, 'getTotalWinAmount', [
             'payLines' => $payLines
         ]);
 
@@ -69,7 +72,7 @@ class SlotCommandTest extends TestCase
     /** @test */
     public function test_slot_with_five_matches_on_one_payline()
     {
-        $payLines = $this->invokeMethod(SlotCommand::class, 'getMatchedPayLines', [
+        $payLines = $this->invokeMethod(self::TEST_CLASS, 'getMatchedPayLines', [
             'board' => [
                 0 => "J", 3 => "J", 6 => "J", 9 => "J", 12 => "J",
                 1 => "Q", 4 => "9", 7 => "K", 10 => "Q", 13 => "cat",
@@ -77,7 +80,7 @@ class SlotCommandTest extends TestCase
             ]
         ]);
 
-        $totalWin = $this->invokeMethod(SlotCommand::class, 'getTotalWinAmount', [
+        $totalWin = $this->invokeMethod(self::TEST_CLASS, 'getTotalWinAmount', [
             'payLines' => $payLines
         ]);
 
@@ -88,7 +91,7 @@ class SlotCommandTest extends TestCase
     /** @test */
     public function test_slot_with_three_matches_on_two_paylines()
     {
-        $payLines = $this->invokeMethod(SlotCommand::class, 'getMatchedPayLines', [
+        $payLines = $this->invokeMethod(self::TEST_CLASS, 'getMatchedPayLines', [
             'board' => [
                 0 => "J", 3 => "J", 6 => "J", 9 => "9", 12 => "cat",
                 1 => "Q", 4 => "J", 7 => "K", 10 => "Q", 13 => "cat",
@@ -96,7 +99,7 @@ class SlotCommandTest extends TestCase
             ]
         ]);
 
-        $totalWin = $this->invokeMethod(SlotCommand::class, 'getTotalWinAmount', [
+        $totalWin = $this->invokeMethod(self::TEST_CLASS, 'getTotalWinAmount', [
             'payLines' => $payLines
         ]);
 
@@ -110,7 +113,7 @@ class SlotCommandTest extends TestCase
     /** @test */
     public function test_slot_with_four_matches_on_two_paylines()
     {
-        $payLines = $this->invokeMethod(SlotCommand::class, 'getMatchedPayLines', [
+        $payLines = $this->invokeMethod(self::TEST_CLASS, 'getMatchedPayLines', [
             'board' => [
                 0 => "J", 3 => "J", 6 => "J", 9 => "J", 12 => "cat",
                 1 => "Q", 4 => "J", 7 => "K", 10 => "K", 13 => "cat",
@@ -118,7 +121,7 @@ class SlotCommandTest extends TestCase
             ]
         ]);
 
-        $totalWin = $this->invokeMethod(SlotCommand::class, 'getTotalWinAmount', [
+        $totalWin = $this->invokeMethod(self::TEST_CLASS, 'getTotalWinAmount', [
             'payLines' => $payLines
         ]);
 
@@ -132,7 +135,7 @@ class SlotCommandTest extends TestCase
     /** @test */
     public function test_slot_with_five_matches_on_two_paylines()
     {
-        $payLines = $this->invokeMethod(SlotCommand::class, 'getMatchedPayLines', [
+        $payLines = $this->invokeMethod(self::TEST_CLASS, 'getMatchedPayLines', [
             'board' => [
                 0 => "dog", 3 => "dog", 6 => "dog", 9 => "dog", 12 => "dog",
                 1 => "Q", 4 => "K", 7 => "K", 10 => "J", 13 => "Q",
@@ -140,7 +143,7 @@ class SlotCommandTest extends TestCase
             ]
         ]);
 
-        $totalWin = $this->invokeMethod(SlotCommand::class, 'getTotalWinAmount', [
+        $totalWin = $this->invokeMethod(self::TEST_CLASS, 'getTotalWinAmount', [
             'payLines' => $payLines
         ]);
 
@@ -154,7 +157,7 @@ class SlotCommandTest extends TestCase
     /** @test */
     public function test_slot_with_mixed_matches_on_two_paylines()
     {
-        $payLines = $this->invokeMethod(SlotCommand::class, 'getMatchedPayLines', [
+        $payLines = $this->invokeMethod(self::TEST_CLASS, 'getMatchedPayLines', [
             'board' => [
                 0 => "monkey", 3 => "dog", 6 => "Q", 9 => "10", 12 => "9",
                 1 => "Q", 4 => "cat", 7 => "K", 10 => "J", 13 => "Q",
@@ -162,7 +165,7 @@ class SlotCommandTest extends TestCase
             ]
         ]);
 
-        $totalWin = $this->invokeMethod(SlotCommand::class, 'getTotalWinAmount', [
+        $totalWin = $this->invokeMethod(self::TEST_CLASS, 'getTotalWinAmount', [
             'payLines' => $payLines
         ]);
 
@@ -176,7 +179,7 @@ class SlotCommandTest extends TestCase
     /** @test */
     public function test_slot_with_mixed_matches_on_three_paylines()
     {
-        $payLines = $this->invokeMethod(SlotCommand::class, 'getMatchedPayLines', [
+        $payLines = $this->invokeMethod(self::TEST_CLASS, 'getMatchedPayLines', [
             'board' => [
                 0 => "monkey", 3 => "monkey", 6 => "monkey", 9 => "monkey", 12 => "J",
                 1 => "dog", 4 => "Q", 7 => "Q", 10 => "Q", 13 => "J",
@@ -184,10 +187,10 @@ class SlotCommandTest extends TestCase
             ]
         ]);
 
-        $totalWin = $this->invokeMethod(SlotCommand::class, 'getTotalWinAmount', [
+        $totalWin = $this->invokeMethod(self::TEST_CLASS, 'getTotalWinAmount', [
             'payLines' => $payLines
         ]);
-        
+
         $this->assertEquals([
             0 => ["0 3 6 9 12" => 4],
             1 => ["1 4 7 10 13" => 3],

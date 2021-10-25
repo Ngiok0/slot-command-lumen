@@ -2,6 +2,9 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use App\Http\Controllers\SlotController;
+use Illuminate\Http\JsonResponse;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -13,6 +16,8 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+$router->get('/', function () {
+    $slot = new SlotController();
+
+    return new JsonResponse($slot->play(), 200, [], JSON_PRETTY_PRINT);
 });

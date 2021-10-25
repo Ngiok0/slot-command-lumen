@@ -1,4 +1,4 @@
-FROM php:7.3-fpm
+FROM php:8.0-fpm
 
 COPY ./docker/php/php.override.ini /usr/local/etc/php/conf.d
 

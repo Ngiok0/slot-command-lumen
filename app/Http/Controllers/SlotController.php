@@ -83,24 +83,44 @@ class SlotController extends Controller
     /**
      * It checks if lines of board matches a pay lines
      *
-     * @param $board
-     * @param $payLine
+     * @param array $board
+     * @param array $payLine
      *
      * @return array
      */
     protected function checkForWonPayLines(array $board, array $payLine): array
     {
         // It filters the board to get only the items (symbols) of current line
-        $line = collect($board)->filter(function ($key) use ($payLine) {
-            return in_array($key, $payLine);
-        })->toArray();
+        $line = collect($board)
+            ->filter(fn ($_, $key) => in_array($key, $payLine))
+            ->sortKeys()
+            ->toArray();
 
-        // Filters the repeated items to get only the ones that are payable
-        $won = collect(array_count_values($line))->filter(function ($times) {
-            return isset($this->payOut[$times]) ? $this->payOut[$times] : 0;
-        })->first();
+        // Checks if the quantity of symbols in line matches a payout
+        if (!array_key_exists(count($line), $this->payOut)) {
+            return [];
+        }
 
-        return $won ? [implode(' ', $payLine) => $won] : [];
+        // Get first symbol of line to start comparing to the next one
+        $firstSymbol = reset($line);
+
+        // Accumulator of matches
+        $matches = 0;
+
+        // Check if the first symbol equals the one stored in $firstSymbol
+        foreach ($line as $_ => $symbol) {
+            if ($symbol === $firstSymbol) {
+                $matches++;
+            } else {
+                if (isset($this->payOut[$matches])) {
+                    return [implode(' ', $payLine) => $matches]; // We got enough symbols
+                }
+                $firstSymbol = $symbol;
+                $matches = 1;
+            }
+        }
+
+        return isset($this->payOut[$matches]) ? [implode(' ', $payLine) => $matches] : [];
     }
 
     /**

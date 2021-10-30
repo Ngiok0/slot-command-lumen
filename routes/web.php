@@ -17,7 +17,11 @@ use Illuminate\Http\JsonResponse;
 */
 
 $router->get('/', function () {
-    $slot = new SlotController();
+    $maxGames = (int) request()->input('max_games') ?: 1;
 
-    return new JsonResponse($slot->play(), 200, [], JSON_PRETTY_PRINT);
+    $result = $maxGames > 1
+        ? (new SlotController())->tryToWin($maxGames)
+        : (new SlotController())->play();
+
+    return new JsonResponse($result, 200, [], JSON_PRETTY_PRINT | JSON_FORCE_OBJECT);
 });

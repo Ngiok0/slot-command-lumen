@@ -32,20 +32,52 @@ class SlotController extends Controller
         5 => 10
     ];
 
-    public function play()
-    {
-        $board    = $this->generateRandomBoard();
-        $payLines = $this->getMatchedPayLines($board);
-        $totalWin = count($payLines) ? $this->getTotalWinAmount($payLines) : 0;
+    // Don't allow more games than this value per request
+    public $maxGames = 2 ** 7;
 
-        $output = collect([
-            'board' => collect($board)->values(),
+    /**
+     * Main function which plays the slot machine
+     *
+     * @throws \Exception
+     *
+     * @return array
+     */
+    public function play(): array
+    {
+        try {
+            $board    = $this->generateRandomBoard();
+            $payLines = $this->getMatchedPayLines($board);
+            $totalWin = count($payLines) ? $this->getTotalWinAmount($payLines) : 0;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
+        return [
+            'board' => $board,
             'paylines' => $payLines,
             'bet_amount' => $this->bet,
             'total_win' => $totalWin
-        ]);
+        ];
+    }
 
-        return $output;
+    /**
+     * It tries to play until a win amount is accomplished
+     *
+     * @param integer $maxGames
+     *
+     * @return array
+     */
+    public function tryToWin(int $maxGames = 1): array
+    {
+        $maxGames = $maxGames <= $this->maxGames ? $maxGames : $this->maxGames;
+        $attempts = 0;
+
+        do {
+            $result = (new SlotController())->play();
+            $result['attempts'] = ++$attempts;
+        } while (0 === $result['total_win'] && --$maxGames > 0);
+
+        return $result;
     }
 
     /**

@@ -4,7 +4,7 @@ A simple command on Lumen which plays a typical Slot game
 
 ### Requirements
 
--   PHP 7.3 (included in Docker)
+-   PHP 8.0 (included in Docker)
 
 ### Docker
 

@@ -56,9 +56,8 @@ class SlotController extends Controller
     protected function generateRandomBoard(): array
     {
         return collect(range(1, (self::COLUMNS * self::ROWS)))
-            ->map(function () {
-                return collect($this->symbols)->random(1)->first();
-            })->toArray();
+            ->map(fn () => collect($this->symbols)->random(1)->first())
+            ->toArray();
     }
 
     /**
@@ -71,9 +70,8 @@ class SlotController extends Controller
     protected function getMatchedPayLines(array $board): array
     {
         $matches = collect($this->payLines)
-            ->map(function ($payLine) use ($board) {
-                return $this->checkForWonPayLines($board, $payLine);
-            })->toArray();
+            ->map(fn ($payLine) => $this->checkForWonPayLines($board, $payLine))
+            ->toArray();
 
         $matches = array_filter($matches, 'count'); // Removes not won lines
 

@@ -159,8 +159,8 @@ class SlotCommandTest extends TestCase
     {
         $payLines = $this->invokeMethod(self::TEST_CLASS, 'getMatchedPayLines', [
             'board' => [
-                0 => "monkey", 3 => "dog", 6 => "Q", 9 => "10", 12 => "9",
-                1 => "Q", 4 => "cat", 7 => "K", 10 => "J", 13 => "Q",
+                0 => "monkey", 3 => "dog", 6 => "cat", 9 => "10", 12 => "9",
+                1 => "Q", 4 => "J", 7 => "K", 10 => "cat", 13 => "Q",
                 2 => "cat", 5 => "cat", 8 => "cat", 11 => "cat", 14 => "cat"
             ]
         ]);
